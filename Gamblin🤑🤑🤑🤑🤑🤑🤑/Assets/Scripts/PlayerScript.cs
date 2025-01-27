@@ -243,7 +243,7 @@ public class PlayerScript : MonoBehaviour
             _currentSpeed = Mathf.MoveTowards(_currentSpeed, 0f, deceleration * Time.deltaTime);
         }
         
-        _rb.linearVelocity = new Vector2(_currentSpeed, _rb.linearVelocity.y);
+        _rb.position = new Vector2(_currentSpeed, _rb.linearVelocity.y);
     }
 
     private void Dead()
