@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SlotMachine : MonoBehaviour {
     private Dictionary<int, int> _outcomes;
@@ -11,6 +12,10 @@ public class SlotMachine : MonoBehaviour {
     private float _timeRemaining;
     private bool _gamblingAnim;
 
+    [SerializeField] private AudioSource audioSourceWin;
+    [SerializeField] private AudioClip soundEffectWin;
+    [SerializeField] private AudioSource audioSourceLoose;
+    [SerializeField] private AudioClip soundEffectLoose;
     [SerializeField] private TMP_Text uiTimer;
 
     void Start() {
@@ -22,7 +27,7 @@ public class SlotMachine : MonoBehaviour {
             { 5000, 20 }, // 20% Chance
             { 0, 10 } // 10% Chance
         };
-       uiTimer.text = "GAMBLE   !";
+       uiTimer.text = "GAMBLE!";
     }
 
     int CalculateWeightedOutcome(Dictionary<int, int> weightedOutcomes) {
@@ -54,7 +59,9 @@ public class SlotMachine : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             CalculateWeightedOutcome(_outcomes);
             StartCoroutine(Gambling());
-            _timeRemaining = 8f;
+            if(_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
+            else audioSourceWin.PlayOneShot(soundEffectWin);
+            _timeRemaining = 5.5f;
             _inputLocked = true;
         }
     }
@@ -62,7 +69,8 @@ public class SlotMachine : MonoBehaviour {
     private IEnumerator Gambling() {
         var startTime = Time.time;
         _gamblingAnim = true;
-        while (Time.time - startTime < 8f) {
+        yield return new WaitForSeconds(1.3f);
+        while (Time.time - startTime < 5.5f) {
             var result =_outcomes.ElementAt(Random.Range(0, _outcomes.Count)).Key;
             uiTimer.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             yield return new WaitForSeconds(0.1f);
