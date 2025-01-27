@@ -24452,7 +24452,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: jumpForce
-      value: 13
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: movementSpeed
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: sprintMultiplier
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6933380886087703299, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: m_Name

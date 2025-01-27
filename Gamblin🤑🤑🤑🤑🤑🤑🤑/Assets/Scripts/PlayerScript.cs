@@ -7,19 +7,24 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] private float maxSpeed = 15f;     
-    [SerializeField] private float acceleration = 10f; 
-    [SerializeField] private float deceleration = 10f; 
-    [SerializeField] private float reverseDeceleration = 25f;
-    [SerializeField] private int jumpForce = 10;
+    [SerializeField] private Animator animator;
+    
+    [Header("Movement")]
+    [SerializeField] private float movementSpeed = 7.5f;
+
+    [SerializeField] private float sprintMultiplier = 1.3f;
+    
+    [Header("Jumping")]
+    [SerializeField] private float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
-    [SerializeField] private Animator animator;
     
+    [Header("For Camera")]
     public bool isAlive = true;
     public bool stopCamera  = false;
+    
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _isGrounded = true;
@@ -32,8 +37,10 @@ public class PlayerScript : MonoBehaviour
     private float _deathTime = 2f;
     private bool _finished = false;
     private bool _finishedMove = false;
-
     private float _finishedTime = 1f;
+    private bool _sprinting = false;
+    private bool _pressedShift = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -175,7 +182,74 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void Move()
+    {
+        if (_finishedMove)
+        {
+            _rb.linearVelocity = new Vector2(movementSpeed * 1, _rb.linearVelocity.y);
+        }
+
+        if (!_finished)
+        {
+            if (Input.GetKey(KeyCode.LeftShift) && _isGrounded)
+            {
+                _sprinting = true;
+            }
+            else if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                _sprinting = false;
+            }
+
+            if (_sprinting)
+            {
+                _rb.linearVelocity = new Vector2(movementSpeed * sprintMultiplier * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
+            }
+            else
+            {
+                _rb.linearVelocity = new Vector2(movementSpeed * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
+            }
+        }
+    }
+
+    public void Jump()
+    {
+                
+        if ( _isGrounded && Input.GetKeyDown(KeyCode.Space) || (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space)) )
+        {
+            animator.SetBool("Jumping", true);
+            _isJumping = true;
+            _jumpTimeCounter = maxJumpTime;
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
+            _isGrounded = false;
+        }
+
+        if (_isJumping && Input.GetKey(KeyCode.Space))
+        {
+            if (_jumpTimeCounter >= 0)
+            {
+                _rb.AddForce(Vector2.up * sustainedJumpForce);
+                _jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                _isJumping = false;
+                _coyoteTimeCounter = 0;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            _isJumping = false;  
+            _coyoteTimeCounter = 0;
+        }
+
+        if (!_isJumping && !_isGrounded)
+        {
+            _rb.AddForce(Vector2.down * fallGravity);
+        }
+    }
+
+    /*private void Jump()
     {
         
         if ( _isGrounded && Input.GetKeyDown(KeyCode.Space) || (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space)) )
@@ -212,6 +286,7 @@ public class PlayerScript : MonoBehaviour
             _rb.AddForce(Vector2.down * fallGravity);
         }
     }
+    
 
     private void Move()
     {
@@ -243,8 +318,8 @@ public class PlayerScript : MonoBehaviour
             _currentSpeed = Mathf.MoveTowards(_currentSpeed, 0f, deceleration * Time.deltaTime);
         }
         
-        _rb.position = new Vector2(_currentSpeed, _rb.linearVelocity.y);
-    }
+        _rb.linearVelocity = new Vector2(_currentSpeed, _rb.linearVelocity.y);
+    }*/
 
     private void Dead()
     {
