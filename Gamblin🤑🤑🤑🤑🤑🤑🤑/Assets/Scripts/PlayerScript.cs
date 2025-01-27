@@ -39,7 +39,6 @@ public class PlayerScript : MonoBehaviour
     private bool _finishedMove = false;
     private float _finishedTime = 1f;
     private bool _sprinting = false;
-    private bool _pressedShift = false;
     
     // Start is called before the first frame update
     void Start()
