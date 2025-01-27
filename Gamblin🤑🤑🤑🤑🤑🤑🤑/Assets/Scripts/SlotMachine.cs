@@ -17,6 +17,7 @@ public class SlotMachine : MonoBehaviour {
     [SerializeField] private AudioSource audioSourceLoose;
     [SerializeField] private AudioClip soundEffectLoose;
     [SerializeField] private TMP_Text uiTimer;
+    [SerializeField] private DopaminBarScript dopaminBar;
 
     void Start() {
         _outcomes = new Dictionary<int, int> {
@@ -58,6 +59,8 @@ public class SlotMachine : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Q)) {
             CalculateWeightedOutcome(_outcomes);
+            dopaminBar.Reset();
+            dopaminBar.waiting = true;
             StartCoroutine(Gambling());
             if(_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
             else audioSourceWin.PlayOneShot(soundEffectWin);
@@ -77,5 +80,6 @@ public class SlotMachine : MonoBehaviour {
         }
         _gamblingAnim = false;
         _inputLocked = false;
+        dopaminBar.waiting = false;
     }
 }
