@@ -2,20 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class GameManager : MonoBehaviour
-{
-    [SerializeField] private TMP_Text cherryText;
-    public static int cherryCount = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class GameManager : MonoBehaviour {
+    [SerializeField] private TMP_Text jetonText;
+    [SerializeField] private PlayerScript player;
 
-    // Update is called once per frame
-    void Update()
-    {
-        cherryText.text = cherryCount.ToString("D3");
+    void Update() {
+        jetonText.text = $"Jetons: {player.jetons}";
     }
 }
