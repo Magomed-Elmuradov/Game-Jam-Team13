@@ -13,6 +13,10 @@ public class PlayerScript : MonoBehaviour {
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
+    [SerializeField] private AudioSource audioSourceJump;
+    [SerializeField] private AudioClip soundEffectJump;
+    [SerializeField] private AudioSource audioSourceLand;
+    [SerializeField] private AudioClip soundEffectLand;
 
     [Header("Movement")] [SerializeField] private float movementSpeed = 7.5f;
     [Header("Jumping")] [SerializeField] private float jumpForce = 10;
@@ -90,7 +94,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("Ground") && !CheckForWall()) {
+        if (collision.gameObject.CompareTag("Ground")) {
             if (Mathf.RoundToInt(_rb.linearVelocity.y) != 0) {
                 return;
             }
@@ -107,6 +111,10 @@ public class PlayerScript : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Ground")) {
+            audioSourceLand.PlayOneShot(soundEffectLand);
+        }
+
         if (other.gameObject.CompareTag("Enemy")) {
             _rb.linearVelocity = Vector2.zero;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, Vector2.up.y * 10);
@@ -179,7 +187,8 @@ public class PlayerScript : MonoBehaviour {
             _isGrounded = false;
         }
 
-        if (_isJumping && Input.GetKey(KeyCode.Space)) {
+        if (_isJumping && Input.GetKeyDown(KeyCode.Space)) {
+            audioSourceJump.PlayOneShot(soundEffectJump);
             if (_jumpTimeCounter >= 0) {
                 _rb.AddForce(Vector2.up * sustainedJumpForce);
                 _jumpTimeCounter -= Time.deltaTime;
@@ -209,13 +218,5 @@ public class PlayerScript : MonoBehaviour {
         if (_deathTime <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-    }
-
-    private bool CheckForWall() {
-        Vector2 rayDirection = new Vector2(Mathf.Sign(_rb.linearVelocity.x), 0);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 0.5f, LayerMask.GetMask("Ground"));
-
-        if (hit.collider is not null) return true;
-        return false;
     }
 }
