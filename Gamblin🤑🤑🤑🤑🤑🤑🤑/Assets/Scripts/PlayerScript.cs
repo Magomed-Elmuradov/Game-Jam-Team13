@@ -21,9 +21,17 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
     
+    [Header("Shooting")]
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float projectileSpeed = 12.5f;
+    [SerializeField] private float projectileCoolDown = 3f;
+    
     [Header("For Camera")]
     public bool isAlive = true;
     public bool stopCamera  = false;
+    
+    [Header("Dopamine Bar")]
+    [SerializeField] private DopaminBarScript dopaminBar;
     
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
@@ -39,6 +47,9 @@ public class PlayerScript : MonoBehaviour
     private bool _finishedMove = false;
     private float _finishedTime = 1f;
     private bool _sprinting = false;
+    private Transform _head;
+    private int _lookingAsInt = 1;
+    private float _coolDownValue;
     
     // Start is called before the first frame update
     void Start()
@@ -46,6 +57,9 @@ public class PlayerScript : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _coyoteTimeCounter = coyoteTime;
+        _head = GetComponentInChildren<Transform>();
+        _coolDownValue = projectileCoolDown;
+        projectileCoolDown = 0;
     }
 
     // Update is called once per frame
@@ -54,10 +68,12 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) || Input.GetAxis("Horizontal") < 0 && !_finished)
         {
             _sr.flipX = true;
+            _lookingAsInt = -1;
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetAxis("Horizontal") > 0 && !_finished)
         {
             _sr.flipX = false;
+            _lookingAsInt = 1;
         }
         
         if (_isGrounded)
@@ -91,6 +107,16 @@ public class PlayerScript : MonoBehaviour
                 _finishedMove = true;
                 Move();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0)
+        { 
+            Shoot();
+            projectileCoolDown = _coolDownValue;
+        }
+        else
+        {
+            projectileCoolDown -= Time.deltaTime;
         }
     }
 
@@ -155,6 +181,7 @@ public class PlayerScript : MonoBehaviour
             Enemy._rb.constraints = RigidbodyConstraints2D.FreezeAll;
             Enemy.alive = false;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
+            dopaminBar.time += 3;
         }
         else if (other.gameObject.CompareTag("StopCamera"))
         {
@@ -248,78 +275,6 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    /*private void Jump()
-    {
-        
-        if ( _isGrounded && Input.GetKeyDown(KeyCode.Space) || (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space)) )
-        {
-            animator.SetBool("Jumping", true);
-            _isJumping = true;
-            _jumpTimeCounter = maxJumpTime;
-            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpForce);
-            _isGrounded = false;
-        }
-
-        if (_isJumping && Input.GetKey(KeyCode.Space))
-        {
-            if (_jumpTimeCounter >= 0)
-            {
-                _rb.AddForce(Vector2.up * sustainedJumpForce);
-                _jumpTimeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                _isJumping = false;
-                _coyoteTimeCounter = 0;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            _isJumping = false;  
-            _coyoteTimeCounter = 0;
-        }
-
-        if (!_isJumping && !_isGrounded)
-        {
-            _rb.AddForce(Vector2.down * fallGravity);
-        }
-    }
-    
-
-    private void Move()
-    {
-        float input = Input.GetAxis("Horizontal"); 
-        float velocityX = _rb.linearVelocity.x;      
-
-        if (CheckForWall())
-        {
-            _currentSpeed = Mathf.MoveTowards(_currentSpeed, 0f, 100 * Time.deltaTime);
-        }
-        if (input != 0 || _finishedMove)
-        {
-            bool isReversing = Mathf.Sign(input) != Mathf.Sign(velocityX) && velocityX != 0;
-            
-            float effectiveAcceleration = isReversing ? reverseDeceleration : acceleration;
-            
-            if (_finished)
-            {
-                _currentSpeed = Mathf.MoveTowards(_currentSpeed, 1 * maxSpeed, effectiveAcceleration * Time.deltaTime);
-            }
-            else
-            {
-                _currentSpeed = Mathf.MoveTowards(_currentSpeed, input * maxSpeed, effectiveAcceleration * Time.deltaTime);
-            }
-            
-        }
-        else if(Input.GetAxis("Horizontal") == 0 || Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-        {
-            _currentSpeed = Mathf.MoveTowards(_currentSpeed, 0f, deceleration * Time.deltaTime);
-        }
-        
-        _rb.linearVelocity = new Vector2(_currentSpeed, _rb.linearVelocity.y);
-    }*/
-
     private void Dead()
     {
         _rb.GetComponent<Collider2D>().enabled = false;
@@ -345,5 +300,13 @@ public class PlayerScript : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Shoot()
+    {
+        GameObject projectile = GameObject.Instantiate(this.projectile, _head.position, _head.rotation);
+        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+
+        projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
     }
 }

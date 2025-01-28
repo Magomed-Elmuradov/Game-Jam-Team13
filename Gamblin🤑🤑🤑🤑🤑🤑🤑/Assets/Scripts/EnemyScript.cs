@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    
+    [SerializeField] private DopaminBarScript dopaminBar;
     public Rigidbody2D _rb;
     private SpriteRenderer _sr;
     private bool _grounded;
@@ -67,6 +67,15 @@ public class EnemyScript : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             _grounded = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            alive = false;
+            Destroy(other.gameObject);
         }
     }
     

@@ -16,6 +16,11 @@ public class DopaminBarScript : MonoBehaviour {
             time -= Time.deltaTime;
         } else slider.value = 20f;
 
+        if (time > 20)
+        {
+            time = 20;
+        }
+        
         if (slider.value <= 5) Flash();
         else fillImage.color = _green;
 
