@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SlotMachine : MonoBehaviour {
     private Dictionary<int, int> _outcomes;
@@ -12,6 +11,7 @@ public class SlotMachine : MonoBehaviour {
     private float _timeRemaining;
     private bool _gamblingAnim;
 
+    [SerializeField] private PlayerScript player;
     [SerializeField] private AudioSource audioSourceWin;
     [SerializeField] private AudioClip soundEffectWin;
     [SerializeField] private AudioSource audioSourceLoose;
@@ -38,7 +38,6 @@ public class SlotMachine : MonoBehaviour {
         foreach (var kvp in weightedOutcomes) {
             cumulativeWeight += kvp.Value;
             if (randomValue < cumulativeWeight) {
-                _lastResult = kvp.Key;
                 return kvp.Key;
             }
         }
@@ -58,7 +57,14 @@ public class SlotMachine : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
-            CalculateWeightedOutcome(_outcomes);
+            if (player.jetons < 20000) {
+                gamblingText.text = $"Letzter Gewinn: {_lastResult}\nInsufficient Jetons!\nMake some Money!";
+                return;
+            }
+
+
+            player.jetons -= 20000;
+            _lastResult = CalculateWeightedOutcome(_outcomes);
             dopaminBar.Reset();
             StartCoroutine(Gambling());
             if(_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
@@ -77,6 +83,8 @@ public class SlotMachine : MonoBehaviour {
             gamblingText.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             yield return new WaitForSeconds(0.1f);
         }
+
+        player.jetons += _lastResult;
         _gamblingAnim = false;
         _inputLocked = false;
         dopaminBar.waiting = false;

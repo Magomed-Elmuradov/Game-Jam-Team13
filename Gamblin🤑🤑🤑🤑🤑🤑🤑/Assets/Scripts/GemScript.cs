@@ -1,34 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GemScript : MonoBehaviour
-{
-    [SerializeField]
-    private Animator animator;
-    private bool animationComplete;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class GemScript : MonoBehaviour {
+    private static readonly int Collected = Animator.StringToHash("Collected");
+    private bool _animationComplete;
+    [SerializeField] private Animator animator;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (animationComplete)
-        {
+    void Update() {
+        if (_animationComplete) {
             Destroy(this.gameObject);
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        animator.SetBool("Collected", true);
+    public void OnTriggerEnter2D(Collider2D other) {
+        animator.SetBool(Collected, true);
     }
 
-    public void AnimationComplete()
-    {
-        animationComplete = true;
+    public void AnimationComplete() {
+        _animationComplete = true;
     }
 }
