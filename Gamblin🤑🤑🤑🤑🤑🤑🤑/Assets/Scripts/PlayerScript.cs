@@ -35,6 +35,7 @@ public class PlayerScript : MonoBehaviour {
 
 
     [HideInInspector] public int jetons;
+    [HideInInspector] public float time;
 
     private Rigidbody2D _rb;
     private SpriteRenderer _sr;
@@ -63,6 +64,7 @@ public class PlayerScript : MonoBehaviour {
         _head = GetComponentInChildren<Transform>();
         _coolDownValue = projectileCoolDown;
         projectileCoolDown = 0;
+        time = 0f;
     }
 
     void Update() {
@@ -119,6 +121,7 @@ public class PlayerScript : MonoBehaviour {
             animator.SetBool(Dead1, true);
             Dead();
         }
+        time += Time.fixedDeltaTime;
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
