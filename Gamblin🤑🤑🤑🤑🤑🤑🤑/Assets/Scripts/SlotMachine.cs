@@ -16,7 +16,7 @@ public class SlotMachine : MonoBehaviour {
     [SerializeField] private AudioClip soundEffectWin;
     [SerializeField] private AudioSource audioSourceLoose;
     [SerializeField] private AudioClip soundEffectLoose;
-    [SerializeField] private TMP_Text uiTimer;
+    [SerializeField] private TMP_Text gamblingText;
     [SerializeField] private DopaminBarScript dopaminBar;
 
     void Start() {
@@ -28,7 +28,7 @@ public class SlotMachine : MonoBehaviour {
             { 5000, 20 }, // 20% Chance
             { 0, 10 } // 10% Chance
         };
-       uiTimer.text = "GAMBLE!";
+       gamblingText.text = "GAMBLE!";
     }
 
     int CalculateWeightedOutcome(Dictionary<int, int> weightedOutcomes) {
@@ -49,10 +49,10 @@ public class SlotMachine : MonoBehaviour {
         if (_inputLocked) {
             if (_timeRemaining > 0) {
                 _timeRemaining -= Time.deltaTime;
-                if(!_gamblingAnim) uiTimer.text = $"Letzter Gewinn: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
+                if(!_gamblingAnim) gamblingText.text = $"Letzter Gewinn: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             } else {
                 _inputLocked = false;
-                uiTimer.text = $"Letzter Gewinn: {_lastResult}\nTime to Gamble again!";
+                gamblingText.text = $"Letzter Gewinn: {_lastResult}\nTime to Gamble again!";
             }
             return;
         }
@@ -60,7 +60,6 @@ public class SlotMachine : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             CalculateWeightedOutcome(_outcomes);
             dopaminBar.Reset();
-            dopaminBar.waiting = true;
             StartCoroutine(Gambling());
             if(_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
             else audioSourceWin.PlayOneShot(soundEffectWin);
@@ -75,7 +74,7 @@ public class SlotMachine : MonoBehaviour {
         yield return new WaitForSeconds(1.3f);
         while (Time.time - startTime < 5.5f) {
             var result =_outcomes.ElementAt(Random.Range(0, _outcomes.Count)).Key;
-            uiTimer.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
+            gamblingText.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             yield return new WaitForSeconds(0.1f);
         }
         _gamblingAnim = false;
