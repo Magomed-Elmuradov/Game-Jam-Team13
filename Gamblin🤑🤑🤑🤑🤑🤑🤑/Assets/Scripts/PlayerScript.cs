@@ -170,6 +170,7 @@ public class PlayerScript : MonoBehaviour {
             enemy.alive = false;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
             dopaminBar.time += 3;
+            dopaminBar.slider.value += 3;
         }
         else if (other.gameObject.CompareTag("StopCamera")) {
             stopCamera = true;

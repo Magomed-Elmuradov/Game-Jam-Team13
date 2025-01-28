@@ -18,6 +18,7 @@ public class DopaminBarScript : MonoBehaviour {
         if (time > 20)
         {
             time = 20;
+            slider.value = time;
         }
         
         if (slider.value <= 5) Flash();
