@@ -28,7 +28,7 @@ public class SlotMachineScript : MonoBehaviour {
             { 5000, 20 }, // 20% Chance
             { 0, 10 } // 10% Chance
         };
-        gamblingText.text = "GAMBLE!";
+        gamblingText.text = "Press Q to \nGAMBLE!";
     }
 
     int CalculateWeightedOutcome(Dictionary<int, int> weightedOutcomes) {
@@ -51,11 +51,11 @@ public class SlotMachineScript : MonoBehaviour {
                 _timeRemaining -= Time.deltaTime;
                 if (!_gamblingAnim)
                     gamblingText.text =
-                        $"Letzter Gewinn: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
+                        $"Last Win: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             }
             else {
                 _inputLocked = false;
-                gamblingText.text = $"Letzter Gewinn: {_lastResult}\nTime to Gamble again!";
+                gamblingText.text = $"Last Win: {_lastResult}\nTime to Gamble again!";
             }
 
             return;
@@ -64,7 +64,7 @@ public class SlotMachineScript : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q)) {
             if (!player.isAlive) return;
             if (player.jetons < 20000) {
-                gamblingText.text = $"Letzter Gewinn: {_lastResult}\nInsufficient Jetons!\nMake some Money!";
+                gamblingText.text = $"Last Win: {_lastResult}\nInsufficient Jetons!\nMake some Money!";
                 return;
             }
 
@@ -81,11 +81,12 @@ public class SlotMachineScript : MonoBehaviour {
 
     private IEnumerator Gambling() {
         var startTime = Time.time;
+        //player.time = 20f;
         _gamblingAnim = true;
         yield return new WaitForSeconds(1.3f);
         while (Time.time - startTime < 5.5f) {
             var result = _outcomes.ElementAt(Random.Range(0, _outcomes.Count)).Key;
-            gamblingText.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
+            gamblingText.text = $"Last Win: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -99,10 +100,14 @@ public class SlotMachineScript : MonoBehaviour {
         dopaminBar.waiting = true;
         yield return new WaitForSeconds(1.3f);
         while (dopaminBar.time < 20) {
+            player.time += 0.3f;
             dopaminBar.time += 0.3f;
             dopaminBar.slider.value += 0.3f;
             yield return new WaitForSeconds(0.05f);
             if (dopaminBar.time >= 20) break;
         }
+        player.time = 20;
+        dopaminBar.slider.value = 20;
+        dopaminBar.time = 20;
     }
 }

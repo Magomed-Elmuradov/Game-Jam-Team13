@@ -23,7 +23,7 @@ public class PlayerScript : MonoBehaviour {
     [SerializeField] private float projectileCoolDown = 3f;
 
     [Header("For Camera")] public bool isAlive = true;
-    public bool stopCamera = false;
+    public bool stopCamera;
 
     [Header("Dopamine Bar")] [SerializeField]
     private DopaminBarScript dopaminBar;
@@ -50,7 +50,7 @@ public class PlayerScript : MonoBehaviour {
     private bool _finished;
     private bool _finishedMove;
     private float _finishedTime = 1f;
-    private bool _sprinting = false;
+    private bool _sprinting;
     private Transform _head;
     private int _lookingAsInt = 1;
     private float _coolDownValue;
@@ -64,7 +64,7 @@ public class PlayerScript : MonoBehaviour {
         _head = GetComponentInChildren<Transform>();
         _coolDownValue = projectileCoolDown;
         projectileCoolDown = 0;
-        time = 0f;
+        time = 20f;
     }
 
     void Update() {
@@ -121,7 +121,7 @@ public class PlayerScript : MonoBehaviour {
             animator.SetBool(Dead1, true);
             Dead();
         }
-        time += Time.fixedDeltaTime;
+        if(!dopaminBar.waiting) time -= Time.fixedDeltaTime;
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
