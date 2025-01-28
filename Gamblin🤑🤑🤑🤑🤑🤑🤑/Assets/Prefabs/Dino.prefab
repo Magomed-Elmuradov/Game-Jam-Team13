@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6007288879181933830}
+  dopaminBar: {fileID: 8966869053907661819, guid: 95f1d6741a3134b4894ca8449f1cb304, type: 3}
   _rb: {fileID: 0}
   alive: 1
 --- !u!95 &6007288879181933830

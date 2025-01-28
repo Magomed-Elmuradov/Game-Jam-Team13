@@ -5,6 +5,7 @@ public class EnemyScript : MonoBehaviour {
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     [SerializeField] private Animator animator;
+    [SerializeField] private DopaminBarScript dopaminBar;
 
     public Rigidbody2D rb;
     private SpriteRenderer _sr;
@@ -54,6 +55,15 @@ public class EnemyScript : MonoBehaviour {
         animator.SetBool(Jumping, false);
         if (other.gameObject.CompareTag("Ground")) {
             _grounded = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            alive = false;
+            Destroy(other.gameObject);
         }
     }
 
