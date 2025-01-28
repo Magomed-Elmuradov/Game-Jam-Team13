@@ -2,43 +2,38 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
-    
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Dead1 = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
 
     [SerializeField] private Animator animator;
-    
-    [Header("Movement")] 
-    [SerializeField] private float movementSpeed = 7.5f;
+
+    [Header("Movement")] [SerializeField] private float movementSpeed = 7.5f;
     [SerializeField] private float sprintMultiplier = 1.3f;
-    
-    [Header("Jumping")] 
-    [SerializeField] private float jumpForce = 10;
+
+    [Header("Jumping")] [SerializeField] private float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
-    
-    [Header("Shooting")]
-    [SerializeField] private GameObject projectile;
+
+    [Header("Shooting")] [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileSpeed = 12.5f;
     [SerializeField] private float projectileCoolDown = 3f;
-    
-    [Header("For Camera")]
-    public bool isAlive = true;
-    public bool stopCamera  = false;
-    
-    [Header("Dopamine Bar")]
-    [SerializeField] private DopaminBarScript dopaminBar;
-    
+
+    [Header("For Camera")] public bool isAlive = true;
+    public bool stopCamera = false;
+
+    [Header("Dopamine Bar")] [SerializeField]
+    private DopaminBarScript dopaminBar;
+
     [SerializeField] private AudioSource audioSourceJump;
     [SerializeField] private AudioClip soundEffectJump;
     [SerializeField] private AudioSource audioSourceLand;
     [SerializeField] private AudioClip soundEffectLand;
 
-    
+
     [HideInInspector] public int jetons;
 
     private Rigidbody2D _rb;
@@ -58,10 +53,9 @@ public class PlayerScript : MonoBehaviour {
     private Transform _head;
     private int _lookingAsInt = 1;
     private float _coolDownValue;
-    
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _coyoteTimeCounter = coyoteTime;
@@ -108,13 +102,11 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0)
-        { 
+        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0) {
             Shoot();
             projectileCoolDown = _coolDownValue;
         }
-        else
-        {
+        else {
             projectileCoolDown -= Time.deltaTime;
         }
     }
@@ -134,6 +126,7 @@ public class PlayerScript : MonoBehaviour {
             if (Mathf.RoundToInt(_rb.linearVelocity.y) != 0) {
                 return;
             }
+
             _isGrounded = true;
             animator.SetBool(Grounded, true);
         }
@@ -236,8 +229,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        if (_isJumping && Input.GetKeyDown(KeyCode.Space))
-        {
+        if (_isJumping && Input.GetKeyDown(KeyCode.Space)) {
             audioSourceJump.PlayOneShot(soundEffectJump);
         }
 
@@ -251,8 +243,7 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    private void Dead()
-    {
+    private void Dead() {
         _rb.GetComponent<Collider2D>().enabled = false;
         _deathTime -= Time.deltaTime;
         _rb.freezeRotation = false;
@@ -262,26 +253,20 @@ public class PlayerScript : MonoBehaviour {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
-    private bool CheckForWall()
-    {
+
+    private bool CheckForWall() {
         Vector2 rayDirection = new Vector2(Mathf.Sign(_rb.linearVelocity.x), 0);
-        
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 0.5f, LayerMask.GetMask("Ground"));
 
-
-        if (hit.collider is not null)
-        {
+        if (hit.collider is not null) {
             return true;
         }
-
         return false;
     }
 
-    public void Shoot()
-    {
+    public void Shoot() {
         GameObject projectile = GameObject.Instantiate(this.projectile, _head.position, _head.rotation);
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-
         projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
     }
 }

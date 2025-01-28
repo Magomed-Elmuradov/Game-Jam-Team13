@@ -1,15 +1,10 @@
-using System;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ProjectileScript : MonoBehaviour
 {
     [SerializeField] private DopaminBarScript dopaminBar;
     private SpriteRenderer _sr;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -27,8 +22,7 @@ public class ProjectileScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyHead"))
-        {
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyHead")) {
             dopaminBar.time += 3;
         }
     }

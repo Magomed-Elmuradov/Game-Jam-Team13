@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class SlotMachine : MonoBehaviour {
+public class SlotMachineScript : MonoBehaviour {
     private Dictionary<int, int> _outcomes;
     private int _lastResult;
     private bool _inputLocked;
@@ -28,7 +28,7 @@ public class SlotMachine : MonoBehaviour {
             { 5000, 20 }, // 20% Chance
             { 0, 10 } // 10% Chance
         };
-       gamblingText.text = "GAMBLE!";
+        gamblingText.text = "GAMBLE!";
     }
 
     int CalculateWeightedOutcome(Dictionary<int, int> weightedOutcomes) {
@@ -41,6 +41,7 @@ public class SlotMachine : MonoBehaviour {
                 return kvp.Key;
             }
         }
+
         return 0;
     }
 
@@ -48,11 +49,15 @@ public class SlotMachine : MonoBehaviour {
         if (_inputLocked) {
             if (_timeRemaining > 0) {
                 _timeRemaining -= Time.deltaTime;
-                if(!_gamblingAnim) gamblingText.text = $"Letzter Gewinn: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
-            } else {
+                if (!_gamblingAnim)
+                    gamblingText.text =
+                        $"Letzter Gewinn: {_lastResult}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
+            }
+            else {
                 _inputLocked = false;
                 gamblingText.text = $"Letzter Gewinn: {_lastResult}\nTime to Gamble again!";
             }
+
             return;
         }
 
@@ -62,12 +67,12 @@ public class SlotMachine : MonoBehaviour {
                 gamblingText.text = $"Letzter Gewinn: {_lastResult}\nInsufficient Jetons!\nMake some Money!";
                 return;
             }
-            
+
             player.jetons -= 20000;
             _lastResult = CalculateWeightedOutcome(_outcomes);
-            dopaminBar.Reset();
             StartCoroutine(Gambling());
-            if(_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
+            StartCoroutine(FillSyringe());
+            if (_lastResult < 20000) audioSourceLoose.PlayOneShot(soundEffectLoose);
             else audioSourceWin.PlayOneShot(soundEffectWin);
             _timeRemaining = 5.5f;
             _inputLocked = true;
@@ -79,14 +84,25 @@ public class SlotMachine : MonoBehaviour {
         _gamblingAnim = true;
         yield return new WaitForSeconds(1.3f);
         while (Time.time - startTime < 5.5f) {
-            var result =_outcomes.ElementAt(Random.Range(0, _outcomes.Count)).Key;
+            var result = _outcomes.ElementAt(Random.Range(0, _outcomes.Count)).Key;
             gamblingText.text = $"Letzter Gewinn: {result}\nTime Remaining: {Mathf.CeilToInt(_timeRemaining)}s";
             yield return new WaitForSeconds(0.1f);
         }
 
+        dopaminBar.waiting = false;
         player.jetons += _lastResult;
         _gamblingAnim = false;
         _inputLocked = false;
-        dopaminBar.waiting = false;
+    }
+
+    public IEnumerator FillSyringe() {
+        dopaminBar.waiting = true;
+        yield return new WaitForSeconds(1.3f);
+        while (dopaminBar.time < 20) {
+            dopaminBar.time += 0.3f;
+            dopaminBar.slider.value += 0.3f;
+            yield return new WaitForSeconds(0.05f);
+            if (dopaminBar.time >= 20) break;
+        }
     }
 }
