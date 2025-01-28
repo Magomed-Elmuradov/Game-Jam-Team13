@@ -2,27 +2,43 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
+    
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Dead1 = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
 
     [SerializeField] private Animator animator;
+    
+    [Header("Movement")] 
+    [SerializeField] private float movementSpeed = 7.5f;
     [SerializeField] private float sprintMultiplier = 1.3f;
+    
+    [Header("Jumping")] 
+    [SerializeField] private float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
+    
+    [Header("Shooting")]
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private float projectileSpeed = 12.5f;
+    [SerializeField] private float projectileCoolDown = 3f;
+    
+    [Header("For Camera")]
+    public bool isAlive = true;
+    public bool stopCamera  = false;
+    
+    [Header("Dopamine Bar")]
+    [SerializeField] private DopaminBarScript dopaminBar;
+    
     [SerializeField] private AudioSource audioSourceJump;
     [SerializeField] private AudioClip soundEffectJump;
     [SerializeField] private AudioSource audioSourceLand;
     [SerializeField] private AudioClip soundEffectLand;
 
-    [Header("Movement")] [SerializeField] private float movementSpeed = 7.5f;
-    [Header("Jumping")] [SerializeField] private float jumpForce = 10;
-    [Header("For Camera")] public bool isAlive = true;
-
-    public bool stopCamera;
+    
     [HideInInspector] public int jetons;
 
     private Rigidbody2D _rb;
@@ -38,21 +54,31 @@ public class PlayerScript : MonoBehaviour {
     private bool _finished;
     private bool _finishedMove;
     private float _finishedTime = 1f;
-    private bool _sprinting;
-
-    void Start() {
+    private bool _sprinting = false;
+    private Transform _head;
+    private int _lookingAsInt = 1;
+    private float _coolDownValue;
+    
+    // Start is called before the first frame update
+    void Start()
+    {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _coyoteTimeCounter = coyoteTime;
         jetons = 40000;
+        _head = GetComponentInChildren<Transform>();
+        _coolDownValue = projectileCoolDown;
+        projectileCoolDown = 0;
     }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.A) || Input.GetAxis("Horizontal") < 0 && !_finished) {
             _sr.flipX = true;
+            _lookingAsInt = -1;
         }
         else if (Input.GetKeyDown(KeyCode.D) || Input.GetAxis("Horizontal") > 0 && !_finished) {
             _sr.flipX = false;
+            _lookingAsInt = 1;
         }
 
         if (_isGrounded) {
@@ -80,6 +106,16 @@ public class PlayerScript : MonoBehaviour {
                 _finishedMove = true;
                 Move();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0)
+        { 
+            Shoot();
+            projectileCoolDown = _coolDownValue;
+        }
+        else
+        {
+            projectileCoolDown -= Time.deltaTime;
         }
     }
 
@@ -133,6 +169,7 @@ public class PlayerScript : MonoBehaviour {
             enemy.rb.constraints = RigidbodyConstraints2D.FreezeAll;
             enemy.alive = false;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
+            dopaminBar.time += 3;
         }
         else if (other.gameObject.CompareTag("StopCamera")) {
             stopCamera = true;
@@ -187,8 +224,7 @@ public class PlayerScript : MonoBehaviour {
             _isGrounded = false;
         }
 
-        if (_isJumping && Input.GetKeyDown(KeyCode.Space)) {
-            audioSourceJump.PlayOneShot(soundEffectJump);
+        if (_isJumping && Input.GetKey(KeyCode.Space)) {
             if (_jumpTimeCounter >= 0) {
                 _rb.AddForce(Vector2.up * sustainedJumpForce);
                 _jumpTimeCounter -= Time.deltaTime;
@@ -197,6 +233,11 @@ public class PlayerScript : MonoBehaviour {
                 _isJumping = false;
                 _coyoteTimeCounter = 0;
             }
+        }
+
+        if (_isJumping && Input.GetKeyDown(KeyCode.Space))
+        {
+            audioSourceJump.PlayOneShot(soundEffectJump);
         }
 
         if (Input.GetKeyUp(KeyCode.Space)) {
@@ -209,7 +250,8 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    private void Dead() {
+    private void Dead()
+    {
         _rb.GetComponent<Collider2D>().enabled = false;
         _deathTime -= Time.deltaTime;
         _rb.freezeRotation = false;
@@ -218,5 +260,27 @@ public class PlayerScript : MonoBehaviour {
         if (_deathTime <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+    private bool CheckForWall()
+    {
+        Vector2 rayDirection = new Vector2(Mathf.Sign(_rb.linearVelocity.x), 0);
+        
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 0.5f, LayerMask.GetMask("Ground"));
+
+
+        if (hit.collider is not null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void Shoot()
+    {
+        GameObject projectile = GameObject.Instantiate(this.projectile, _head.position, _head.rotation);
+        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+
+        projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
     }
 }
