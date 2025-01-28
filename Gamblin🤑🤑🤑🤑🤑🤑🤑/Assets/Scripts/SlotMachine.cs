@@ -57,12 +57,12 @@ public class SlotMachine : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Q)) {
+            if (!player.isAlive) return;
             if (player.jetons < 20000) {
                 gamblingText.text = $"Letzter Gewinn: {_lastResult}\nInsufficient Jetons!\nMake some Money!";
                 return;
             }
-
-
+            
             player.jetons -= 20000;
             _lastResult = CalculateWeightedOutcome(_outcomes);
             dopaminBar.Reset();
