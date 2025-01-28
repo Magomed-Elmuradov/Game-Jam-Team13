@@ -23391,6 +23391,7 @@ RectTransform:
   - {fileID: 1879789381}
   - {fileID: 1616062377}
   - {fileID: 262797658}
+  - {fileID: 1896174406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -24858,6 +24859,11 @@ MonoBehaviour:
   time: 20
   player: {fileID: 2082129462}
   waiting: 0
+--- !u!224 &1896174406 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6906469423559460285, guid: 95f1d6741a3134b4894ca8449f1cb304, type: 3}
+  m_PrefabInstance: {fileID: 580435159840996603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2035220967 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5381601197078748253, guid: 050387f6100cdc9499c68d9982eaa625, type: 3}
@@ -25476,6 +25482,10 @@ PrefabInstance:
       value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 5349053974786930248, guid: 3ed3abbcac1b26843a49548bbb3b7472, type: 3}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: movementSpeed
       value: 7.5
       objectReference: {fileID: 0}
@@ -25498,6 +25508,10 @@ PrefabInstance:
     - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: sprintMultiplier
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: projectileCoolDown
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6933380886087703299, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: m_Name

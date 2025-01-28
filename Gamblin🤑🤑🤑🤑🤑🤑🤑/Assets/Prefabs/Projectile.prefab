@@ -165,3 +165,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc712235ce8ec874390270dd7add8078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dopaminBar: {fileID: 0}

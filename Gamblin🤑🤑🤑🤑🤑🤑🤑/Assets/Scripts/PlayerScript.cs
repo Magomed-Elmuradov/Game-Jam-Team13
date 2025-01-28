@@ -2,23 +2,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour {
+    
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Dead1 = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
 
     [SerializeField] private Animator animator;
+    
+    [Header("Movement")] 
+    [SerializeField] private float movementSpeed = 7.5f;
     [SerializeField] private float sprintMultiplier = 1.3f;
+    
+    [Header("Jumping")] 
+    [SerializeField] private float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
-    
-    [Header("Movement")] 
-    [SerializeField] private float movementSpeed = 7.5f;
-    
-    [Header("Jumping")] 
-    [SerializeField] private float jumpForce = 10;
     
     [Header("Shooting")]
     [SerializeField] private GameObject projectile;
@@ -223,8 +224,7 @@ public class PlayerScript : MonoBehaviour {
             _isGrounded = false;
         }
 
-        if (_isJumping && Input.GetKeyDown(KeyCode.Space)) {
-            audioSourceJump.PlayOneShot(soundEffectJump);
+        if (_isJumping && Input.GetKey(KeyCode.Space)) {
             if (_jumpTimeCounter >= 0) {
                 _rb.AddForce(Vector2.up * sustainedJumpForce);
                 _jumpTimeCounter -= Time.deltaTime;
@@ -233,6 +233,11 @@ public class PlayerScript : MonoBehaviour {
                 _isJumping = false;
                 _coyoteTimeCounter = 0;
             }
+        }
+
+        if (_isJumping && Input.GetKeyDown(KeyCode.Space))
+        {
+            audioSourceJump.PlayOneShot(soundEffectJump);
         }
 
         if (Input.GetKeyUp(KeyCode.Space)) {
