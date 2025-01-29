@@ -11,8 +11,8 @@ public class EnemyScript : MonoBehaviour {
 
     public Rigidbody2D rb;
     private SpriteRenderer _sr;
-    internal bool _grounded;
-    internal float _waitTime = 1f;
+    private bool _grounded;
+    private float _waitTime = 1f;
     public bool alive = true;
     private bool _animationcomplete;
 
@@ -62,9 +62,9 @@ public class EnemyScript : MonoBehaviour {
         
     }
 
-    internal void JumpLeft() {
+    void JumpLeft() {
         rb.linearVelocity = Vector2.zero;
-        rb.AddForce(new Vector2(-5f*speed, 3f*speed), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(-5f, 3f), ForceMode2D.Impulse);
         _grounded = false;
         animator.SetBool(Grounded, false);
         animator.SetBool(Jumping, true);
