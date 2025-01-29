@@ -1,7 +1,7 @@
-using TMPro;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour {
+public class DiceScript : MonoBehaviour
+{
     private static readonly int Dead = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
@@ -14,54 +14,33 @@ public class EnemyScript : MonoBehaviour {
     internal bool _grounded;
     internal float _waitTime = 1f;
     public bool alive = true;
-    private bool _animationcomplete;
-
-    void Start() {
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
     }
 
-    void Update() {
+    // Update is called once per frame
+    void Update()
+    {
         if (alive == false) {
             animator.SetBool(Dead, true);
             foreach (Transform child in transform) {
                 Destroy(child.gameObject);
             }
         }
-
-        // if (_grounded && alive && GetComponent<SpriteRenderer>().isVisible) {
-        //     _waitTime -= Time.deltaTime;
-        // }
-        //
-        // if (_waitTime <= 0 && alive) {
-        //     _waitTime = 1f;
-        //     JumpLeft();
-        // }
         
-
-
-        if (_animationcomplete) {
-            Destroy(gameObject);
+        if (_grounded && alive && GetComponent<SpriteRenderer>().isVisible) {
+            _waitTime -= Time.deltaTime;
         }
+        if (_waitTime <= 0 && alive) {
+            _waitTime = 1f;
+            JumpLeft();
+        }
+        
     }
     
-    void FixedUpdate()
-    {
-        if (alive && rb.linearVelocityX > -10 && _sr.isVisible)
-        {
-            MoveLeft();
-        }
-    }
-
-    private void MoveLeft()
-    {
-        //rb.linearVelocity = new Vector2(-speed, 0);
-        //rb.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
-        rb.linearVelocity = new Vector2(-speed, rb.linearVelocity.y);
-        //rb.AddTorque(20, ForceMode2D.Force);
-        
-    }
-
     internal void JumpLeft() {
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(new Vector2(-5f*speed, 3f*speed), ForceMode2D.Impulse);
@@ -69,7 +48,7 @@ public class EnemyScript : MonoBehaviour {
         animator.SetBool(Grounded, false);
         animator.SetBool(Jumping, true);
     }
-
+    
     private void OnCollisionEnter2D(Collision2D other) {
         animator.SetBool(Grounded, true);
         animator.SetBool(Jumping, false);
@@ -87,8 +66,8 @@ public class EnemyScript : MonoBehaviour {
             alive = false;
         }
     }
-
+    
     public void AnimationComplete() {
-        _animationcomplete = true;
+        Destroy(gameObject);
     }
 }
