@@ -104,7 +104,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0) {
+        if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0 && isAlive && !_finished) {
             Shoot();
             projectileCoolDown = _coolDownValue;
         }
@@ -270,6 +270,7 @@ public class PlayerScript : MonoBehaviour {
     public void Shoot() {
         GameObject projectile = GameObject.Instantiate(this.projectile, _head.position, _head.rotation);
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+        projectileRb.AddTorque(-1000f);
         projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
     }
 }

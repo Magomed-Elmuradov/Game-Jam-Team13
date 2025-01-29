@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8097617402639856606, guid: 998144ffa84da334db9f708551a29a27, type: 3}
+  m_Sprite: {fileID: -6598661363960372492, guid: 4e2c136e2a09d8d4ba401f3f6a058b23, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -257,3 +257,5 @@ MonoBehaviour:
   time: 20
   player: {fileID: 0}
   waiting: 0
+  audioSourceLowDopamine: {fileID: 0}
+  soundEffectLowDopamine: {fileID: 0}

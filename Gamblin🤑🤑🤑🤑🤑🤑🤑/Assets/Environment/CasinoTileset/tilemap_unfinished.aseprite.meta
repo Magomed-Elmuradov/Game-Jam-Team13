@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 998144ffa84da334db9f708551a29a27
+guid: 83056a12cb241c24fbb2dc7fcc658cf1
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: syringe
+  - name: tilemap_unfinished
     originalName: 
-    pivot: {x: 0.49738216, y: -0.516129}
+    pivot: {x: 0.8, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,9 +132,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 382
-      height: 62
-    spriteID: 88c53fe1b5e931143beae1184a849b5d
+      width: 160
+      height: 128
+    spriteID: 9cc168c846101cc46819f544e82f2fde
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,21 +146,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1515056085
-    name: syringe
+    guid: -1422822556
+    name: tilemap_unfinished
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: syringe
+    - name: tilemap_unfinished
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
-        y: 32
-        width: 382
-        height: 62
-      spriteId: 88c53fe1b5e931143beae1184a849b5d
+        x: 0
+        y: 0
+        width: 160
+        height: 128
+      spriteId: 9cc168c846101cc46819f544e82f2fde
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -179,4 +179,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 384, y: 128}
+  canvasSize: {x: 256, y: 128}
