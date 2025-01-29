@@ -10,14 +10,15 @@ public class PlayerScript : MonoBehaviour {
 
     [SerializeField] private Animator animator;
 
-    [Header("Movement")] [SerializeField] private float movementSpeed = 7.5f;
+    [Header("Movement")] public float movementSpeed = 7.5f;
     [SerializeField] private float sprintMultiplier = 1.3f;
 
-    [Header("Jumping")] [SerializeField] private float jumpForce = 10;
+    [Header("Jumping")] public float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
+    public int maxJumps = int.MaxValue;
 
     [Header("Shooting")] [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileSpeed = 12.5f;
@@ -216,6 +217,9 @@ public class PlayerScript : MonoBehaviour {
     private void Jump() {
         if (_isGrounded && Input.GetKeyDown(KeyCode.Space) ||
             (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space))) {
+            if (maxJumps == 0) return;
+            maxJumps--;
+            if (maxJumps == 0) StartCoroutine(ResetJumps());
             animator.SetBool(Jumping, true);
             _isJumping = true;
             _jumpTimeCounter = maxJumpTime;
@@ -274,6 +278,11 @@ public class PlayerScript : MonoBehaviour {
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
         projectileRb.AddTorque(-1000f);
         projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
+    }
+
+    private IEnumerator ResetJumps() {
+        yield return new WaitForSeconds(5f);
+        maxJumps = 3;
     }
 
     public void StopThrow()
