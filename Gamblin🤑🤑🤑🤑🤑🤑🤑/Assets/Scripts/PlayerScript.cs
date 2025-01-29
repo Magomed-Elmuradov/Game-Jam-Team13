@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -165,9 +166,18 @@ public class PlayerScript : MonoBehaviour {
             isAlive = false;
         }
         else if (other.gameObject.CompareTag("EnemyHead")) {
-            EnemyScript enemy = other.gameObject.GetComponentInParent<EnemyScript>();
-            enemy.rb.constraints = RigidbodyConstraints2D.FreezeAll;
-            enemy.alive = false;
+            if (other.gameObject.GetComponentInParent<EnemyScript>() != null)
+            {
+                EnemyScript jeton = other.gameObject.GetComponentInParent<EnemyScript>();
+                jeton.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                jeton.alive = false;
+            }
+            else
+            {
+                DiceScript dice = other.gameObject.GetComponentInParent<DiceScript>();
+                dice.rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                dice.alive = false;
+            }
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
             dopaminBar.time += 3;
             dopaminBar.slider.value += 3;
