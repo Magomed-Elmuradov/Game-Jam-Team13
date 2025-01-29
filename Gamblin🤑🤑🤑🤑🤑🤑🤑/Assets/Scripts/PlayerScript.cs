@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour {
     public bool stopCamera;
 
     [Header("Dopamine Bar")] [SerializeField]
-    private DopaminBarScript dopaminBar;
+    [HideInInspector]public DopaminBarScript dopaminBar;
 
     [SerializeField] private AudioSource audioSourceJump;
     [SerializeField] private AudioClip soundEffectJump;
@@ -125,6 +125,7 @@ public class PlayerScript : MonoBehaviour {
             Dead();
         }
         if(!dopaminBar.waiting) time -= Time.fixedDeltaTime;
+        if (time <= 0) time = 0;
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
@@ -217,9 +218,11 @@ public class PlayerScript : MonoBehaviour {
     private void Jump() {
         if (_isGrounded && Input.GetKeyDown(KeyCode.Space) ||
             (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space))) {
-            if (maxJumps == 0) return;
             maxJumps--;
-            if (maxJumps == 0) StartCoroutine(ResetJumps());
+            if (maxJumps <= 0) {
+                StartCoroutine(ResetJumps());
+                return;
+            }
             animator.SetBool(Jumping, true);
             _isJumping = true;
             _jumpTimeCounter = maxJumpTime;
