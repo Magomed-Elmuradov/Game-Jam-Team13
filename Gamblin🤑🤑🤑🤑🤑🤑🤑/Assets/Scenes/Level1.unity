@@ -24091,6 +24091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dino (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8893773715758794130, guid: 221dff08762aa9241abb5db44adec867, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25155,6 +25159,10 @@ PrefabInstance:
     - target: {fileID: 1190460684650200429, guid: 221dff08762aa9241abb5db44adec867, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2301787826886807187, guid: 221dff08762aa9241abb5db44adec867, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5406225113081147401, guid: 221dff08762aa9241abb5db44adec867, type: 3}
       propertyPath: m_Name
