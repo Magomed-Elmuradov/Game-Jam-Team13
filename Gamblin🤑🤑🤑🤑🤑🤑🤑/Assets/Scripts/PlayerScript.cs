@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,14 +11,18 @@ public class PlayerScript : MonoBehaviour {
 
     [SerializeField] private Animator animator;
 
-    [Header("Movement")] [SerializeField] private float movementSpeed = 7.5f;
+    [Header("Movement")] public float movementSpeed = 7.5f;
     [SerializeField] private float sprintMultiplier = 1.3f;
+    public float maxSprintTime = float.MaxValue;
+    private bool _isWaitingSprint;
 
-    [Header("Jumping")] [SerializeField] private float jumpForce = 10;
+    [Header("Jumping")] public float jumpForce = 10;
     [SerializeField] private float sustainedJumpForce = 1.5f;
     [SerializeField] private float maxJumpTime = 0.2f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float fallGravity;
+    public int maxJumps = int.MaxValue;
+    private bool _isWaitingJumps;
 
     [Header("Shooting")] [SerializeField] private GameObject projectile;
     [SerializeField] private float projectileSpeed = 12.5f;
@@ -27,7 +32,7 @@ public class PlayerScript : MonoBehaviour {
     public bool stopCamera;
 
     [Header("Dopamine Bar")] [SerializeField]
-    private DopaminBarScript dopaminBar;
+    [HideInInspector]public DopaminBarScript dopaminBar;
 
     [SerializeField] private AudioSource audioSourceJump;
     [SerializeField] private AudioClip soundEffectJump;
@@ -124,6 +129,7 @@ public class PlayerScript : MonoBehaviour {
             Dead();
         }
         if(!dopaminBar.waiting) time -= Time.fixedDeltaTime;
+        if (time <= 0) time = 0;
     }
 
     private void OnCollisionStay2D(Collision2D collision) {
@@ -201,14 +207,19 @@ public class PlayerScript : MonoBehaviour {
         if (!_finished) {
             if (Input.GetKey(KeyCode.LeftShift) && _isGrounded) {
                 _sprinting = true;
+                if (maxSprintTime <= 0) {
+                    if(!_isWaitingSprint) StartCoroutine(ResetSprint());
+                    _sprinting = false;
+                }
+                if(_sprinting && maxSprintTime >= 0) maxSprintTime -= Time.deltaTime;
+                else maxSprintTime = 0;
             }
             else if (!Input.GetKey(KeyCode.LeftShift)) {
                 _sprinting = false;
             }
 
             if (_sprinting) {
-                _rb.linearVelocity = new Vector2(movementSpeed * sprintMultiplier * Input.GetAxisRaw("Horizontal"),
-                    _rb.linearVelocity.y);
+                _rb.linearVelocity = new Vector2(movementSpeed * sprintMultiplier * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
             }
             else {
                 _rb.linearVelocity = new Vector2(movementSpeed * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
@@ -217,8 +228,14 @@ public class PlayerScript : MonoBehaviour {
     }
 
     private void Jump() {
+        if (_isWaitingJumps) return;
         if (_isGrounded && Input.GetKeyDown(KeyCode.Space) ||
             (_coyoteTimeCounter >= 0 && Input.GetKeyDown(KeyCode.Space))) {
+            maxJumps--;
+            if (maxJumps <= 0) {
+                maxJumps = 0;
+                StartCoroutine(ResetJumps());
+            }
             animator.SetBool(Jumping, true);
             _isJumping = true;
             _jumpTimeCounter = maxJumpTime;
@@ -277,6 +294,20 @@ public class PlayerScript : MonoBehaviour {
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
         projectileRb.AddTorque(-1000f);
         projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
+    }
+
+    private IEnumerator ResetJumps() {
+        _isWaitingJumps = true;
+        yield return new WaitForSeconds(5f);
+        maxJumps = 3;
+        _isWaitingJumps = false;
+    }
+
+    private IEnumerator ResetSprint() {
+        _isWaitingSprint = true;
+        yield return new WaitForSeconds(5f);
+        maxSprintTime = 5f;
+        _isWaitingSprint = false;
     }
 
     public void StopThrow()
