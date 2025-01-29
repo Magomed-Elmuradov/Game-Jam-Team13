@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed75120-efac-4c4a-a607-c2941439bdd7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards.meta" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/eye.png" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/eye.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/eye.png.meta" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/eye.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/leg.png" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/leg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/leg.png.meta" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/leg.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/lung.png" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/lung.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Gamblin/Assets/Resources/BodypartCards/lung.png.meta" afterPathEscaped="$PROJECT_DIR$/Assets/Resources/BodypartCards/lung.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gamblin/Assets/Scenes/Level1.unity" beforePathEscaped="$PROJECT_DIR$/Assets/Scenes/Level1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../Gamblin/Assets/Scenes/Level1.unity" afterPathEscaped="$PROJECT_DIR$/Assets/Scenes/Level1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Gamblin/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" beforePathEscaped="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/../Gamblin/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" afterPathEscaped="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" afterDir="false" />
-    </list>
+    <list default="true" id="bed75120-efac-4c4a-a607-c2941439bdd7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +63,7 @@
       <option name="presentableId" value="Default" />
       <updated>1738057888914</updated>
       <workItem from="1738057890594" duration="61000" />
-      <workItem from="1738152144780" duration="335000" />
+      <workItem from="1738152144780" duration="469000" />
     </task>
     <servers />
   </component>
