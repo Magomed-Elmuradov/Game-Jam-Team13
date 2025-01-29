@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8522706794136896909}
   - component: {fileID: 4446897535660521934}
   - component: {fileID: -7793169012850434957}
+  - component: {fileID: 4348920094107939669}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Projectile
@@ -169,3 +170,26 @@ MonoBehaviour:
   player: {fileID: 0}
   dopamineRegainSource: {fileID: 0}
   dopamineRegainClip: {fileID: 0}
+  anim: {fileID: 0}
+--- !u!95 &4348920094107939669
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5349053974786930248}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 86ac6a89535a90140b35cd21232dee63, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -1,12 +1,17 @@
+using TMPro;
 using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
 {
+    private static readonly int Shatter1 = Animator.StringToHash("Shatter");
+
     [SerializeField] private DopaminBarScript dopaminBar;
     [SerializeField] private PlayerScript player;
     [SerializeField] private AudioSource dopamineRegainSource;
     [SerializeField] private AudioClip dopamineRegainClip;
+    [SerializeField] private Animator anim;
     private SpriteRenderer _sr;
+    private Rigidbody2D _rb;
     
     void Start()
     {
@@ -15,6 +20,8 @@ public class ProjectileScript : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerScript>();
         dopamineRegainSource = GameObject.Find("GainDopamineSource").GetComponent<AudioSource>();
         dopamineRegainClip = Resources.Load<AudioClip>("Sounds/dopaminRegain");
+        anim = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -33,5 +40,19 @@ public class ProjectileScript : MonoBehaviour
             dopaminBar.time += 3;
             player.time += 3;
         }
+    }
+
+    public void Shatter()
+    {
+        anim.SetBool(Shatter1, true);
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddTorque(20);
+        _rb.freezeRotation = true;
+        _rb.constraints = RigidbodyConstraints2D.None; ;
+    }
+
+    public void DestroyBottle()
+    {
+        Destroy(gameObject);
     }
 }

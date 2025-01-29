@@ -62,8 +62,9 @@ public class EnemyScript : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Projectile"))
         {
+            ProjectileScript projectile = other.gameObject.GetComponent<ProjectileScript>();
+            projectile.Shatter();
             alive = false;
-            Destroy(other.gameObject);
         }
     }
 
