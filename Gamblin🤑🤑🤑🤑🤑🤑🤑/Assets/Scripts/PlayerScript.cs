@@ -158,6 +158,8 @@ public class PlayerScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Enemy")) {
+            // EnemyScript enemy = other.gameObject.GetComponentInParent<EnemyScript>();
+            // enemy.rb.GetComponentInChildren<Collider2D>().enabled = false;
             _rb.linearVelocity = Vector2.zero;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, Vector2.up.y * 10);
             isAlive = false;
@@ -169,6 +171,7 @@ public class PlayerScript : MonoBehaviour {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
             dopaminBar.time += 3;
             dopaminBar.slider.value += 3;
+            
         }
         else if (other.gameObject.CompareTag("StopCamera")) {
             stopCamera = true;
@@ -199,7 +202,7 @@ public class PlayerScript : MonoBehaviour {
             if (Input.GetKey(KeyCode.LeftShift) && _isGrounded) {
                 _sprinting = true;
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            else if (!Input.GetKey(KeyCode.LeftShift)) {
                 _sprinting = false;
             }
 
