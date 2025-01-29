@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -8,6 +9,9 @@ public class SellingScript : MonoBehaviour {
     [SerializeField] private Button legSellButton;
     [SerializeField] private Button lungSellButton;
     [SerializeField] private Button closeButton;
+    private TMP_Text _eyeSellText;
+    private TMP_Text _legSellText;
+    private TMP_Text _lungSellText;
     [SerializeField] private PlayerScript player;
     [SerializeField] private Volume postProcessingVolume;
     private Vignette _vignette;
@@ -19,6 +23,9 @@ public class SellingScript : MonoBehaviour {
         legSellButton.onClick.AddListener(SellLeg);
         lungSellButton.onClick.AddListener(SellLung);
         closeButton.onClick.AddListener(ToggleOverlay);
+        _eyeSellText = eyeSellButton.GetComponentInChildren<TMP_Text>();
+        _legSellText = legSellButton.GetComponentInChildren<TMP_Text>();
+        _lungSellText = lungSellButton.GetComponentInChildren<TMP_Text>();
         sellingOverlay.SetActive(false);
         _isOverlayActive = false;
         if (postProcessingVolume.profile.TryGet(out _vignette)) _vignette.intensity.value = 0f;
@@ -39,6 +46,7 @@ public class SellingScript : MonoBehaviour {
         player.jetons += 60000;
         eyeSellButton.enabled = false;
         if (_vignette != null) _vignette.intensity.value = 0.8f;
+        _eyeSellText.text = "Sold";
     }
 
     void SellLeg() {
@@ -46,6 +54,7 @@ public class SellingScript : MonoBehaviour {
         player.movementSpeed *= 0.5f;
         player.jumpForce *= 0.7f;
         legSellButton.enabled = false;
+        _legSellText.text = "Sold";
     }
 
     void SellLung() {
@@ -53,5 +62,6 @@ public class SellingScript : MonoBehaviour {
         player.maxJumps = 3;
         player.maxSprintTime = 5f;
         lungSellButton.enabled = false;
+        _lungSellText.text = "Sold";
     }
 }
