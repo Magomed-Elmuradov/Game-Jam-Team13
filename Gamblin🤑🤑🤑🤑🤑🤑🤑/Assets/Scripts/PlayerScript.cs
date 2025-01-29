@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour {
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Dead1 = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
+    private static readonly int Throwing = Animator.StringToHash("Throwing");
 
     [SerializeField] private Animator animator;
 
@@ -106,6 +107,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F) && projectileCoolDown <= 0 && isAlive && !_finished) {
             Shoot();
+            animator.SetBool(Throwing, true);
             projectileCoolDown = _coolDownValue;
         }
         else {
@@ -272,5 +274,10 @@ public class PlayerScript : MonoBehaviour {
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
         projectileRb.AddTorque(-1000f);
         projectileRb.linearVelocity = new Vector2(projectileSpeed * _lookingAsInt, _rb.linearVelocity.y);
+    }
+
+    public void StopThrow()
+    {
+        animator.SetBool(Throwing, false);
     }
 }

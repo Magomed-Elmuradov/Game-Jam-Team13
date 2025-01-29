@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -39,6 +40,14 @@ public class ProjectileScript : MonoBehaviour
             dopamineRegainSource.PlayOneShot(dopamineRegainClip);
             dopaminBar.time += 3;
             player.time += 3;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            Shatter();
         }
     }
 

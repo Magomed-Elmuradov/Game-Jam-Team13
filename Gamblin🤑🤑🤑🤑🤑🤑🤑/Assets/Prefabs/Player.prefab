@@ -112,7 +112,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
+  m_Sprite: {fileID: -8351561033693396165, guid: eb00dfdaee1962f41a56a93eb620f198, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -176,6 +176,12 @@ MonoBehaviour:
   isAlive: 1
   stopCamera: 0
   dopaminBar: {fileID: 8966869053907661819, guid: 95f1d6741a3134b4894ca8449f1cb304, type: 3}
+  audioSourceJump: {fileID: 0}
+  soundEffectJump: {fileID: 0}
+  audioSourceLand: {fileID: 0}
+  soundEffectLand: {fileID: 0}
+  jetons: 0
+  time: 0
 --- !u!95 &981463892978528203
 Animator:
   serializedVersion: 7
@@ -236,7 +242,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.33, y: 0.32}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.33, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
