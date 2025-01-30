@@ -28586,8 +28586,8 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: -0.24179688
+    y: -0.35277778
     width: 1
     height: 1
   near clip plane: 0.1
@@ -36578,6 +36578,22 @@ PrefabInstance:
     - target: {fileID: 1380338661865512216, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024688072501968541, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
+      propertyPath: m_Size.x
+      value: 0.16102007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024688072501968541, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
+      propertyPath: m_Size.y
+      value: 2.49093
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024688072501968541, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.029788334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024688072501968541, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.9628573
       objectReference: {fileID: 0}
     - target: {fileID: 8907484416279183303, guid: 5573a7964a9427f4b99a3810e951cc52, type: 3}
       propertyPath: m_Name
