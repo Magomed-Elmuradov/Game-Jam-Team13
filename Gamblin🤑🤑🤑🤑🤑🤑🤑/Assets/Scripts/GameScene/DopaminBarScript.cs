@@ -5,7 +5,7 @@ namespace GameScene {
     public class DopaminBarScript : MonoBehaviour {
         [SerializeField] public Slider slider;
         [SerializeField] public Image fillImage;
-        [SerializeField] public float time = 20f;
+        [SerializeField] public float time = 10f;
         [SerializeField] public PlayerScript player;
         [HideInInspector] public bool waiting;
         [SerializeField] private AudioSource audioSourceLowDopamine;
@@ -18,12 +18,12 @@ namespace GameScene {
                 time -= Time.deltaTime;
             }
 
-            if (time > 20) {
-                time = 20;
+            if (time > 10) {
+                time = 10;
                 slider.value = time;
             }
 
-            if (slider.value <= 5) {
+            if (slider.value <= 2.5) {
                 Flash();
                 if (!audioSourceLowDopamine.isPlaying) audioSourceLowDopamine.PlayOneShot(soundEffectLowDopamine);
             }

@@ -42,6 +42,8 @@ namespace GameScene {
     [SerializeField] private AudioClip soundEffectLand;
     [SerializeField] private AudioSource audioSourceWalking;
     [SerializeField] private AudioClip soundEffectWalking;
+    [SerializeField] private AudioSource dopamineRegainSource;
+    [SerializeField] private AudioClip dopamineRegainClip;
 
 
     [HideInInspector] public int jetons;
@@ -74,7 +76,7 @@ namespace GameScene {
         _head = GetComponentInChildren<Transform>();
         _coolDownValue = projectileCoolDown;
         projectileCoolDown = 0;
-        time = 20f;
+        time = 10f;
     }
 
     void Update() {
@@ -186,9 +188,12 @@ namespace GameScene {
                 dice.rb.constraints = RigidbodyConstraints2D.FreezeAll;
                 dice.alive = false;
             }
+            dopamineRegainSource.PlayOneShot(dopamineRegainClip);
+            dopaminBar.time += 1.5f;
+            time += 1.5f;
+            if(dopaminBar.time >= 10) dopaminBar.time = 10;
+            if(time >= 10) time = 10;
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
-            dopaminBar.time += 3;
-            dopaminBar.slider.value += 3;
 
         }
         else if (other.gameObject.CompareTag("StopCamera")) {

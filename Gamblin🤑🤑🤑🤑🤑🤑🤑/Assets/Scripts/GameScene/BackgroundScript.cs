@@ -9,15 +9,18 @@ namespace GameScene {
         private void Start() {
             if (Camera.main != null) _cam = Camera.main.transform;
             _startPos = transform.position.x;
-            _length = GetComponent<SpriteRenderer>().bounds.size.x;
+            _length = 1440;
         }
 
         private void Update() {
-            var distance = _cam.transform.position.x * parallaxSpeed;
+            float distance = _cam.position.x * parallaxSpeed;
             transform.position = new Vector3(_startPos + distance, transform.position.y, transform.position.z);
 
-            if (transform.position.x > _startPos + _length) _startPos += _length;
-            else if (transform.position.x < _startPos - _length) _startPos -= _length;
+            if (_cam.position.x > _startPos + _length) {
+                _startPos += _length;
+            } else if (_cam.position.x < _startPos - _length) {
+                _startPos -= _length;
+            }
         }
     }
 }

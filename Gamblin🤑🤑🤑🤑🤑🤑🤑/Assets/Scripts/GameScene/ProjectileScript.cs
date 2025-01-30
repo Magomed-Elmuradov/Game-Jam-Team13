@@ -36,10 +36,10 @@ namespace GameScene {
         private void OnTriggerEnter2D(Collider2D other) {
             if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyHead")) {
                 dopamineRegainSource.PlayOneShot(dopamineRegainClip);
-                dopaminBar.time += 3;
-                player.time += 3;
-                if(dopaminBar.time >= 20) dopaminBar.time = 20;
-                if(player.time >= 20) player.time = 20;
+                dopaminBar.time += 1.5f;
+                player.time += 1.5f;
+                if(dopaminBar.time >= 10) dopaminBar.time = 10;
+                if(player.time >= 10) player.time = 10;
                 _rb.simulated = false;
             }
         }

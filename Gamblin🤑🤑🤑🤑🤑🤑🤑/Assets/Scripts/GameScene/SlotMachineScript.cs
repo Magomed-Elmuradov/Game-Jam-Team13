@@ -22,12 +22,12 @@ namespace GameScene {
 
         void Start() {
             _outcomes = new Dictionary<int, int> {
-                { 40000, 5 }, // 5% Chance
-                { 30000, 10 }, // 10% Chance
-                { 20000, 25 }, // 25% Chance
-                { 10000, 30 }, // 30% Chance
+                { 40000, 1 }, // 1% Chance
+                { 30000, 5 }, // 5% Chance
+                { 20000, 10 }, // 10% Chance
+                { 10000, 40 }, // 40% Chance
                 { 5000, 20 }, // 20% Chance
-                { 0, 10 } // 10% Chance
+                { 0, 24 } // 24% Chance
             };
             gamblingText.text = "Press Q to \nGAMBLE!";
         }
@@ -99,17 +99,17 @@ namespace GameScene {
         public IEnumerator FillSyringe() {
             dopaminBar.waiting = true;
             yield return new WaitForSeconds(1.3f);
-            while (dopaminBar.time < 20) {
+            while (dopaminBar.time < 10) {
                 player.time += 0.3f;
                 dopaminBar.time += 0.3f;
                 dopaminBar.slider.value += 0.3f;
                 yield return new WaitForSeconds(0.05f);
-                if (dopaminBar.time >= 20) break;
+                if (dopaminBar.time >= 10) break;
             }
 
-            player.time = 20;
-            dopaminBar.slider.value = 20;
-            dopaminBar.time = 20;
+            player.time = 10;
+            dopaminBar.slider.value = 10;
+            dopaminBar.time = 10;
         }
     }
 }
