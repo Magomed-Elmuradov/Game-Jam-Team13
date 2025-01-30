@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace GameScene {
@@ -10,6 +11,7 @@ namespace GameScene {
         [SerializeField] private Button legSellButton;
         [SerializeField] private Button lungSellButton;
         [SerializeField] private Button closeButton;
+        [SerializeField] private Button menuButton;
         private TMP_Text _eyeSellText;
         private TMP_Text _legSellText;
         private TMP_Text _lungSellText;
@@ -24,6 +26,7 @@ namespace GameScene {
             legSellButton.onClick.AddListener(SellLeg);
             lungSellButton.onClick.AddListener(SellLung);
             closeButton.onClick.AddListener(ToggleOverlay);
+            menuButton.onClick.AddListener(BackToMenu);
             _eyeSellText = eyeSellButton.GetComponentInChildren<TMP_Text>();
             _legSellText = legSellButton.GetComponentInChildren<TMP_Text>();
             _lungSellText = lungSellButton.GetComponentInChildren<TMP_Text>();
@@ -64,6 +67,10 @@ namespace GameScene {
             player.maxSprintTime = 5f;
             lungSellButton.enabled = false;
             _lungSellText.text = "Sold";
+        }
+
+        void BackToMenu() {
+            SceneManager.LoadScene("StartScene");
         }
     }
 }
