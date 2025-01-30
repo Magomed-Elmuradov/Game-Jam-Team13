@@ -175,9 +175,9 @@ namespace GameScene {
             isAlive = false;
         }
         else if (other.gameObject.CompareTag("EnemyHead")) {
-            if (other.gameObject.GetComponentInParent<EnemyScript>() != null)
+            if (other.gameObject.GetComponentInParent<JetonScript>() != null)
             {
-                EnemyScript jeton = other.gameObject.GetComponentInParent<EnemyScript>();
+                JetonScript jeton = other.gameObject.GetComponentInParent<JetonScript>();
                 jeton.rb.constraints = RigidbodyConstraints2D.FreezeAll;
                 jeton.alive = false;
             }
