@@ -135,6 +135,8 @@ MonoBehaviour:
   dopamineRegainSource: {fileID: 0}
   dopamineRegainClip: {fileID: 0}
   anim: {fileID: 0}
+  shatterSource: {fileID: 0}
+  shatterClip: {fileID: 0}
 --- !u!95 &4348920094107939669
 Animator:
   serializedVersion: 7

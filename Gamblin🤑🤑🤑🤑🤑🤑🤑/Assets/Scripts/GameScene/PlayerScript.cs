@@ -102,7 +102,7 @@ namespace GameScene {
             animator.SetBool(Jumping, false);
         }
 
-        if (_coyoteTimeCounter >= 0) {
+        if (_coyoteTimeCounter >= 0 && isAlive) {
             Jump();
         }
 
@@ -171,7 +171,6 @@ namespace GameScene {
             // EnemyScript enemy = other.gameObject.GetComponentInParent<EnemyScript>();
             // enemy.rb.GetComponentInChildren<Collider2D>().enabled = false;
             _rb.linearVelocity = Vector2.zero;
-            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, Vector2.up.y * 10);
             isAlive = false;
         }
         else if (other.gameObject.CompareTag("EnemyHead")) {
@@ -284,10 +283,8 @@ namespace GameScene {
     }
 
     private void Dead() {
-        _rb.GetComponent<Collider2D>().enabled = false;
+        _rb.GetComponent<Collider2D>();
         _deathTime -= Time.deltaTime;
-        _rb.freezeRotation = false;
-        _rb.AddTorque(-20f);
 
         if (_deathTime <= 0) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
