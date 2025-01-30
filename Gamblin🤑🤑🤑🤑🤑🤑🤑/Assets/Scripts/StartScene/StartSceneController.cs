@@ -17,7 +17,7 @@ namespace StartScene {
         }
 
         void StartGame() {
-            SceneManager.LoadScene("Level1");
+            SceneManager.LoadScene("ChooseLevelScene");
         }
 
         void ExitGame() {
