@@ -9,6 +9,8 @@ namespace GameScene {
         [SerializeField] private AudioSource dopamineRegainSource;
         [SerializeField] private AudioClip dopamineRegainClip;
         [SerializeField] private Animator anim;
+        [SerializeField] private AudioSource shatterSource;
+        [SerializeField] private AudioClip shatterClip;
         private SpriteRenderer _sr;
         private Rigidbody2D _rb;
 
@@ -18,6 +20,8 @@ namespace GameScene {
             player = GameObject.Find("Player").GetComponent<PlayerScript>();
             dopamineRegainSource = GameObject.Find("GainDopamineSource").GetComponent<AudioSource>();
             dopamineRegainClip = Resources.Load<AudioClip>("Sounds/dopaminRegain");
+            shatterSource = GameObject.Find("GlassBreakingSource").GetComponent<AudioSource>();
+            shatterClip = Resources.Load<AudioClip>("Sounds/glassBreaking");
             anim = GetComponent<Animator>();
             _rb = GetComponent<Rigidbody2D>();
         }
@@ -46,6 +50,7 @@ namespace GameScene {
         }
 
         public void Shatter() {
+            shatterSource.PlayOneShot(shatterClip);
             anim.SetBool(Shatter1, true);
             _rb.linearVelocity = Vector2.zero;
             _rb.AddTorque(20);

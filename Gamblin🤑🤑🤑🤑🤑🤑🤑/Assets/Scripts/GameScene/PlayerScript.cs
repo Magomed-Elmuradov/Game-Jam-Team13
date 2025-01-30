@@ -36,10 +36,13 @@ namespace GameScene {
     [Header("Dopamine Bar")] [SerializeField]
     [HideInInspector]public DopaminBarScript dopaminBar;
 
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSourceJump;
     [SerializeField] private AudioClip soundEffectJump;
     [SerializeField] private AudioSource audioSourceLand;
     [SerializeField] private AudioClip soundEffectLand;
+    [SerializeField] private AudioSource audioSourceWalking;
+    [SerializeField] private AudioClip soundEffectWalking;
 
 
     [HideInInspector] public int jetons;
