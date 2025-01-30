@@ -21216,8 +21216,8 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: -0.2109375
+    y: -0.38750002
     width: 1
     height: 1
   near clip plane: 0.1
@@ -21249,7 +21249,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.95, y: -0.045, z: -10}
+  m_LocalPosition: {x: -2.95, y: 0.86, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25099,7 +25099,7 @@ Transform:
   m_GameObject: {fileID: 1622736483}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.95, y: -0.045, z: -10}
+  m_LocalPosition: {x: -2.95, y: 0.86, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26761,7 +26761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8468385327747220265, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.045
+      value: 0.86
       objectReference: {fileID: 0}
     - target: {fileID: 8468385327747220265, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: m_LocalPosition.z
