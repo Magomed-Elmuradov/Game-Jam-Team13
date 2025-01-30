@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -233,9 +232,11 @@ namespace GameScene {
             }
 
             if (_sprinting) {
+                if(!audioSourceWalking.isPlaying && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))) audioSourceWalking.PlayOneShot(soundEffectWalking);
                 _rb.linearVelocity = new Vector2(movementSpeed * sprintMultiplier * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
             }
             else {
+                if(!audioSourceWalking.isPlaying && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))) audioSourceWalking.PlayOneShot(soundEffectWalking);
                 _rb.linearVelocity = new Vector2(movementSpeed * Input.GetAxisRaw("Horizontal"), _rb.linearVelocity.y);
             }
         }
