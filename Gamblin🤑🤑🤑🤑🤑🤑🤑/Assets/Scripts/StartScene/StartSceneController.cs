@@ -7,11 +7,13 @@ namespace StartScene {
         public Button startButton;
         public Button exitButton;
         public Button creditsButton;
+        public Button controlsButton;
 
         void Start() {
             startButton.onClick.AddListener(StartGame);
             exitButton.onClick.AddListener(ExitGame);
             creditsButton.onClick.AddListener(Credits);
+            controlsButton.onClick.AddListener(Controls);
         }
 
         void StartGame() {
@@ -24,6 +26,10 @@ namespace StartScene {
 
         void Credits() {
             SceneManager.LoadScene("CreditScene");
+        }
+
+        void Controls() {
+            SceneManager.LoadScene("ControlsScene");
         }
     }
 }
