@@ -40,6 +40,7 @@ namespace GameScene {
                 player.time += 3;
                 if(dopaminBar.time >= 20) dopaminBar.time = 20;
                 if(player.time >= 20) player.time = 20;
+                _rb.simulated = false;
             }
         }
 

@@ -302,6 +302,7 @@ namespace GameScene {
     }
 
     public void Shoot() {
+        animator.Play("Throw");
         GameObject projectile = GameObject.Instantiate(this.projectile, _head.position, _head.rotation);
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
         projectileRb.AddTorque(-1000f);
