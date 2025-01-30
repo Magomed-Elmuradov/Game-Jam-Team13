@@ -3,7 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerScript : MonoBehaviour {
+namespace GameScene {
+    public class PlayerScript : MonoBehaviour {
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Dead1 = Animator.StringToHash("Dead");
@@ -187,7 +188,7 @@ public class PlayerScript : MonoBehaviour {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, 10f);
             dopaminBar.time += 3;
             dopaminBar.slider.value += 3;
-            
+
         }
         else if (other.gameObject.CompareTag("StopCamera")) {
             stopCamera = true;
@@ -324,4 +325,5 @@ public class PlayerScript : MonoBehaviour {
     {
         animator.SetBool(Throwing, false);
     }
+}
 }

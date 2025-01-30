@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour {
+namespace GameScene {
+    public class EnemyScript : MonoBehaviour {
     private static readonly int Dead = Animator.StringToHash("Dead");
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Jumping = Animator.StringToHash("Jumping");
@@ -37,14 +38,14 @@ public class EnemyScript : MonoBehaviour {
         //     _waitTime = 1f;
         //     JumpLeft();
         // }
-        
+
 
 
         if (_animationcomplete) {
             Destroy(gameObject);
         }
     }
-    
+
     void FixedUpdate()
     {
         if (alive && rb.linearVelocityX > -10 && _sr.isVisible)
@@ -59,7 +60,7 @@ public class EnemyScript : MonoBehaviour {
         //rb.AddForce(Vector2.left * speed, ForceMode2D.Impulse);
         rb.linearVelocity = new Vector2(-speed, rb.linearVelocity.y);
         //rb.AddTorque(20, ForceMode2D.Force);
-        
+
     }
 
     internal void JumpLeft() {
@@ -91,4 +92,5 @@ public class EnemyScript : MonoBehaviour {
     public void AnimationComplete() {
         _animationcomplete = true;
     }
+}
 }
