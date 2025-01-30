@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 217562594}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7066478, w: 0.70756555}
-  m_LocalPosition: {x: -834.7, y: -1247.7, z: 8.1406145}
+  m_LocalPosition: {x: -821.7, y: -1247.7, z: 8.1406145}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36459,7 +36459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8331476057774556273, guid: 95f1d6741a3134b4894ca8449f1cb304, type: 3}
       propertyPath: m_Value
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36674,6 +36674,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 811485074}
     - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: dopamineRegainClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f7b1e71112023241b31e747d4eb0f4d, type: 3}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: projectileCoolDown
       value: 0.5
       objectReference: {fileID: 0}
@@ -36681,6 +36685,10 @@ PrefabInstance:
       propertyPath: soundEffectWalking
       value: 
       objectReference: {fileID: 8300000, guid: 4f63d5cce80f2744d97ac8bd9633c95a, type: 3}
+    - target: {fileID: 6836652070645748335, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
+      propertyPath: dopamineRegainSource
+      value: 
+      objectReference: {fileID: 1215734366}
     - target: {fileID: 6933380886087703299, guid: 511070c65edbccb418e60a7788f73dd4, type: 3}
       propertyPath: m_Name
       value: Player
