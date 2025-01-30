@@ -34,6 +34,8 @@ namespace GameScene {
                 dopamineRegainSource.PlayOneShot(dopamineRegainClip);
                 dopaminBar.time += 3;
                 player.time += 3;
+                if(dopaminBar.time >= 20) dopaminBar.time = 20;
+                if(player.time >= 20) player.time = 20;
             }
         }
 
@@ -49,7 +51,6 @@ namespace GameScene {
             _rb.AddTorque(20);
             _rb.freezeRotation = true;
             _rb.constraints = RigidbodyConstraints2D.None;
-            ;
         }
 
         public void DestroyBottle() {

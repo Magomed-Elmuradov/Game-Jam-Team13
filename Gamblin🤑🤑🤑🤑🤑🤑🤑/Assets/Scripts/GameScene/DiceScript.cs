@@ -12,16 +12,17 @@ namespace GameScene {
         public Rigidbody2D rb;
         private SpriteRenderer _sr;
         internal bool _grounded;
-        internal float _waitTime = 1f;
+        internal float _waitTime;
 
-        public bool alive = true;
+        public bool alive;
 
         void Start() {
             rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
+            _waitTime = 1f;
+            alive = true;
         }
 
-        // Update is called once per frame
         void Update() {
             if (alive == false) {
                 animator.SetBool(Dead, true);
