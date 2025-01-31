@@ -19,6 +19,7 @@ namespace GameScene {
         [SerializeField] private AudioClip soundEffectLoose;
         [SerializeField] private TMP_Text gamblingText;
         [SerializeField] private DopaminBarScript dopaminBar;
+        [HideInInspector] public bool _isActive;
 
         void Start() {
             _outcomes = new Dictionary<int, int> {
@@ -81,6 +82,7 @@ namespace GameScene {
         }
 
         private IEnumerator Gambling() {
+            _isActive = true;
             var startTime = Time.time;
             _gamblingAnim = true;
             yield return new WaitForSeconds(1.3f);
@@ -94,6 +96,7 @@ namespace GameScene {
             player.jetons += _lastResult;
             _gamblingAnim = false;
             _inputLocked = false;
+            _isActive = false;
         }
 
         public IEnumerator FillSyringe() {

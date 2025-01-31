@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -12,6 +13,7 @@ namespace GameScene {
         [SerializeField] private Button lungSellButton;
         [SerializeField] private Button closeButton;
         [SerializeField] private Button menuButton;
+        [SerializeField] private SlotMachineScript slotMachine;
         private TMP_Text _eyeSellText;
         private TMP_Text _legSellText;
         private TMP_Text _lungSellText;
@@ -37,7 +39,7 @@ namespace GameScene {
 
         private void Update() {
             if (Input.GetKeyDown(KeyCode.Escape)) ToggleOverlay();
-            if (Input.GetKeyDown(KeyCode.Q) && player.jetons < 20000) ToggleOverlay();
+            StartCoroutine(WaitForSlot());
         }
 
         private void ToggleOverlay() {
@@ -72,6 +74,11 @@ namespace GameScene {
         void BackToMenu() {
             Time.timeScale = 1;
             SceneManager.LoadScene("StartScene");
+        }
+
+        private IEnumerator WaitForSlot() {
+            yield return new WaitForSeconds(0.1f);
+            if (Input.GetKeyDown(KeyCode.Q) && player.jetons < 20000 && !slotMachine._isActive) ToggleOverlay();
         }
     }
 }
